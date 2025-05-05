@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BidBound - Auctions</title>
+  <link rel="icon" type="image/png" href="images/Favicon.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="scss/style.css" />
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans">
+
+  <!-- Hidden Checkbox to control modal state -->
+  <input type="checkbox" id="modal-toggle" class="hidden" />
+
+  <!-- Header -->
+  <header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+    <div>
+      <img src="images/Logo.svg" alt="BidBound Logo" class="h-12">
+    </div>
+      <div class="flex gap-2 items-center">
+        <input type="text" placeholder="Search listings..." class="border border-gray-300 rounded px-3 py-2 w-64 focus:outline-blue-500">
+        <a href="#" class="text-blue-600 font-semibold hover:underline">Login</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Listings -->
+  <main class="max-w-7xl mx-auto px-4 py-10">
+    <h1 class="text-2xl font-semibold mb-6">Latest Auctions</h1>
+
+    <ul class="space-y-4">
+      <!-- Listing Item 1 -->
+      <li class="bg-white border border-gray-200 rounded-lg p-4 hover:bg-gray-100 transition flex gap-4">
+        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200" alt="Watch" class="w-40 h-28 object-cover rounded-lg">
+        <div class="flex flex-col justify-between">
+          <div>
+            <h2 class="text-xl font-medium">Vintage Omega Watch</h2>
+            <p class="text-sm text-gray-500">Ends in 3d 4h</p>
+          </div>
+          <div class="text-gray-700 text-sm">Current bid: <strong>NOK 850</strong></div>
+        </div>
+        <div class="ml-auto flex items-center">
+          <label for="modal-toggle" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer">Place Bid</label>
+        </div>
+      </li>
+
+      <!-- Listing Item 2 -->
+      <li class="bg-white border border-gray-200 rounded-lg p-4 hover:bg-gray-100 transition flex gap-4">
+        <img src="https://images.unsplash.com/photo-1581291519195-ef11498d1cf5?w=200" alt="Sneakers" class="w-40 h-28 object-cover rounded-lg">
+        <div class="flex flex-col justify-between">
+          <div>
+            <h2 class="text-xl font-medium">Nike Air Max 97</h2>
+            <p class="text-sm text-gray-500">Ends in 1d 18h</p>
+          </div>
+          <div class="text-gray-700 text-sm">Current bid: <strong>NOK 410</strong></div>
+        </div>
+        <div class="ml-auto flex items-center">
+          <label for="modal-toggle" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer">Place Bid</label>
+        </div>
+      </li>
+
+      <!-- Listing Item 3 -->
+      <li class="bg-white border border-gray-200 rounded-lg p-4 hover:bg-gray-100 transition flex gap-4">
+        <img src="https://images.unsplash.com/photo-1600185365312-cc66f01f57a4?w=200" alt="Laptop" class="w-40 h-28 object-cover rounded-lg">
+        <div class="flex flex-col justify-between">
+          <div>
+            <h2 class="text-xl font-medium">MacBook Pro 2019</h2>
+            <p class="text-sm text-gray-500">Ends in 5h 20m</p>
+          </div>
+          <div class="text-gray-700 text-sm">Current bid: <strong>NOK 2500</strong></div>
+        </div>
+        <div class="ml-auto flex items-center">
+          <label for="modal-toggle" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer">Place Bid</label>
+        </div>
+      </li>
+    </ul>
+  </main>
+
+  <!-- Modal Structure -->
+  <div class="modal-overlay fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4 z-60">
+    <div class="modal-content bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto relative">
+      <!-- Close button (label for the checkbox) -->
+      <label for="modal-toggle" class="modal-close absolute top-2 right-3 text-gray-500 hover:text-gray-800 text-3xl cursor-pointer">&times;</label>
+
+      <!-- Content based on listing-detail.html (Static Placeholders) -->
+      <div class="bg-gray-200 h-80 w-full flex items-center justify-center text-gray-500">
+        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800" alt="Listing Image Placeholder" class="w-full h-full object-cover">
+      </div>
+      <div class="p-6">
+        <h1 class="text-3xl font-semibold mb-2">Vintage Omega Watch</h1>
+        <p class="text-sm text-red-600 mb-4">Ends in: <span class="font-medium">3d 4h</span></p>
+        <div class="mb-6">
+          <h2 class="text-xl font-medium mb-2">Description</h2>
+          <p class="text-gray-700 leading-relaxed">
+            A beautifully preserved vintage Omega Seamaster from the 1960s. Features automatic movement and a stainless steel case. Recently serviced and keeps excellent time. A true collector's item.
+          </p>
+        </div>
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4 border-t border-gray-200 pt-4">
+          <div class="text-lg">
+            Current Bid: <strong class="text-blue-600">NOK 850</strong>
+          </div>
+          <div class="flex gap-2 items-center">
+            <input type="number" placeholder="Your Bid (NOK)" class="border border-gray-300 rounded px-3 py-2 w-36 focus:outline-blue-500">
+            <button class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">Place Bid</button>
+          </div>
+        </div>
+        <div class="mt-6 border-t border-gray-200 pt-4">
+          <p class="text-sm text-gray-600">Seller: <span class="font-medium">WatchCollector123</span></p>
+        </div>
+      </div>
+      <!-- End Content -->
+    </div>
+  </div>
+
+</body>
+</html>

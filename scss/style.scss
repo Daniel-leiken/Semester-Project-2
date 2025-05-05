@@ -1,0 +1,35 @@
+// Define your color variables
+$primary: #3b82f6;
+$bg: #f9fafb;
+$text: #111827;
+
+// Use only if you want to override Tailwind or add extras
+body {
+  background-color: $bg;
+  color: $text;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+// Modal styles using the checkbox hack
+#modal-toggle {
+  display: none; // Keep checkbox hidden
+
+  // When the checkbox is checked, display the modal overlay
+  // Use general sibling combinator (~) for robustness
+  &:checked ~ .modal-overlay {
+    display: flex; // Use flex to enable centering via items-center justify-center
+  }
+}
+
+.modal-overlay {
+  // Tailwind 'hidden' class initially hides this.
+  // Tailwind classes handle positioning, background, etc.
+}
+
+.modal-content {
+  // Tailwind classes handle styling.
+}
+
+.modal-close {
+  // Tailwind classes handle styling.
+}

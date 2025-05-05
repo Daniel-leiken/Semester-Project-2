@@ -1,0 +1,12 @@
+body {
+  background-color: #f9fafb;
+  color: #111827;
+  font-family: "Segoe UI", sans-serif;
+}
+
+#modal-toggle {
+  display: none;
+}
+#modal-toggle:checked ~ .modal-overlay {
+  display: flex;
+}/*# sourceMappingURL=style.css.map */
