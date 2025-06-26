@@ -20,7 +20,7 @@
       <img src="images/Logo.svg" alt="BidBound Logo" class="h-12">
     </div>
       <div class="flex gap-2 items-center">
-        <input type="text" placeholder="Search listings..." class="border border-gray-300 rounded px-3 py-2 w-64 focus:outline-blue-500">
+        <input id="search-input" type="text" placeholder="Search listings..." class="border border-gray-300 rounded px-3 py-2 w-64 focus:outline-blue-500">
         <a href="#" class="text-blue-600 font-semibold hover:underline">Login</a>
       </div>
     </div>
@@ -32,7 +32,7 @@
 
     <ul class="space-y-4">
       <!-- Listing Item 1 -->
-      <li class="bg-white border border-gray-200 rounded-lg p-4 hover:bg-gray-100 transition flex gap-4">
+      <li class="listing bg-white border border-gray-200 rounded-lg p-4 hover:bg-gray-100 transition flex gap-4">
         <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200" alt="Watch" class="w-40 h-28 object-cover rounded-lg">
         <div class="flex flex-col justify-between">
           <div>
@@ -47,7 +47,7 @@
       </li>
 
       <!-- Listing Item 2 -->
-      <li class="bg-white border border-gray-200 rounded-lg p-4 hover:bg-gray-100 transition flex gap-4">
+      <li class="listing bg-white border border-gray-200 rounded-lg p-4 hover:bg-gray-100 transition flex gap-4">
         <img src="https://images.unsplash.com/photo-1581291519195-ef11498d1cf5?w=200" alt="Sneakers" class="w-40 h-28 object-cover rounded-lg">
         <div class="flex flex-col justify-between">
           <div>
@@ -62,7 +62,7 @@
       </li>
 
       <!-- Listing Item 3 -->
-      <li class="bg-white border border-gray-200 rounded-lg p-4 hover:bg-gray-100 transition flex gap-4">
+      <li class="listing bg-white border border-gray-200 rounded-lg p-4 hover:bg-gray-100 transition flex gap-4">
         <img src="https://images.unsplash.com/photo-1600185365312-cc66f01f57a4?w=200" alt="Laptop" class="w-40 h-28 object-cover rounded-lg">
         <div class="flex flex-col justify-between">
           <div>
@@ -114,5 +114,7 @@
     </div>
   </div>
 
+<!-- Link the external JavaScript file before the closing body tag -->
+<script src="/js/search.js"></script>
 </body>
 </html>
