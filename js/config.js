@@ -14,23 +14,21 @@ export const API_HEADERS = {
  */
 export async function apiRequest(endpoint, options = {}) {
   const url = `${API_BASE_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
+  const accessToken = localStorage.getItem('accessToken');
+
   const fetchOptions = {
-    headers: API_HEADERS,
-    ...options, // Slå sammen ekstra alternativer (f.eks. metode, body)
+    headers: {
+      ...API_HEADERS,
+      Authorization: `Bearer ${accessToken}`, // Add token to headers
+    },
+    ...options,
   };
 
   const response = await fetch(url, fetchOptions);
 
   if (!response.ok) {
-    try {
-      const rawResponse = await response.text(); // Hent rå tekstrespons
-      console.error('Raw API Error Response:', rawResponse); // Logg råresponsen
-      const errorData = JSON.parse(rawResponse); // Forsøk å parse råresponsen
-      throw new Error(errorData.errors?.[0]?.message || 'Unknown error occurred.');
-    } catch (error) {
-      console.error('Error parsing API response:', error); // Logg parsing-feil
-      throw new Error('An error occurred, but the response could not be parsed.');
-    }
+    const errorData = await response.json();
+    throw new Error(errorData.errors?.[0]?.message || 'Unknown error occurred.');
   }
 
   return response.json();
