@@ -35,7 +35,17 @@
 
   <!-- Listings -->
   <main class="max-w-7xl mx-auto px-4 py-10">
-    <h1 class="text-2xl font-semibold mb-6">Latest Auctions</h1>
+    <div class="flex items-center justify-between mb-6">
+      <h1 class="text-2xl font-semibold">Latest Auctions</h1>
+      <button id="open-create-listing-modal"
+        class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition font-semibold flex items-center gap-2"
+        type="button">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+        </svg>
+        Create Listing
+      </button>
+    </div>
 
     <ul class="space-y-4">
     </ul>
@@ -53,6 +63,42 @@
       <div id="modal-body">
         <!-- Listing details will be injected here -->
       </div>
+    </div>
+  </div>
+
+  <!-- Create Listing Modal -->
+  <div id="create-listing-modal-overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4 z-60">
+    <div class="bg-white rounded-lg shadow-xl max-w-lg w-full relative">
+      <button id="create-listing-modal-close" class="absolute top-2 right-3 text-gray-500 hover:text-gray-800 text-3xl cursor-pointer">&times;</button>
+      <form id="create-listing-form" class="p-8 flex flex-col gap-4">
+        <h2 class="text-2xl font-semibold mb-2">Create New Listing</h2>
+        <div>
+          <label for="listing-title" class="block text-sm font-medium mb-1">Title <span class="text-red-600">*</span></label>
+          <input id="listing-title" name="title" type="text" required class="border border-gray-300 rounded px-3 py-2 w-full" />
+        </div>
+        <div>
+          <label for="listing-description" class="block text-sm font-medium mb-1">Description</label>
+          <textarea id="listing-description" name="description" rows="3" class="border border-gray-300 rounded px-3 py-2 w-full"></textarea>
+        </div>
+        <div>
+          <label for="listing-tags" class="block text-sm font-medium mb-1">Tags (comma separated)</label>
+          <input id="listing-tags" name="tags" type="text" class="border border-gray-300 rounded px-3 py-2 w-full" />
+        </div>
+        <div>
+          <label for="listing-media-url" class="block text-sm font-medium mb-1">Image URL</label>
+          <input id="listing-media-url" name="media-url" type="url" class="border border-gray-300 rounded px-3 py-2 w-full" placeholder="https://example.com/image.jpg" />
+        </div>
+        <div>
+          <label for="listing-media-alt" class="block text-sm font-medium mb-1">Image Alt Text</label>
+          <input id="listing-media-alt" name="media-alt" type="text" class="border border-gray-300 rounded px-3 py-2 w-full" />
+        </div>
+        <div>
+          <label for="listing-endsAt" class="block text-sm font-medium mb-1">Ends At <span class="text-red-600">*</span></label>
+          <input id="listing-endsAt" name="endsAt" type="datetime-local" required class="border border-gray-300 rounded px-3 py-2 w-full" />
+        </div>
+        <div id="create-listing-message" class="hidden text-center text-sm rounded px-2 py-1"></div>
+        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition mt-2">Create Listing</button>
+      </form>
     </div>
   </div>
 

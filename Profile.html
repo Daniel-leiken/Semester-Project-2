@@ -50,7 +50,7 @@
     </div>
     <div class="mt-6">
       <h2 class="text-xl font-semibold mb-4">Your Listings</h2>
-      <ul id="profile-listings" class="space-y-4">
+      <ul id="user-listings" class="space-y-4">
         <!-- Listings will be dynamically inserted here -->
       </ul>
     </div>
@@ -58,6 +58,19 @@
 
   <div id="loader" class="fixed inset-0 bg-white flex items-center justify-center z-50">
     <div class="loader border-t-4 border-blue-600 rounded-full w-12 h-12 animate-spin"></div>
+  </div>
+
+  <!-- Modal Structure -->
+  <div id="modal-overlay" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4 z-60">
+    <div class="modal-content bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto relative">
+      <!-- Modal loader -->
+      <div id="modal-loader" class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-80 hidden z-10">
+        <div class="loader border-t-4 border-blue-600 rounded-full w-12 h-12 animate-spin"></div>
+      </div>
+      <!-- Close button -->
+      <button id="modal-close" class="modal-close absolute top-2 right-3 text-gray-500 hover:text-gray-800 text-3xl cursor-pointer">&times;</button>
+      <div id="modal-body"></div>
+    </div>
   </div>
 
 

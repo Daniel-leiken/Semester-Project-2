@@ -19,15 +19,17 @@ export async function apiRequest(endpoint, options = {}) {
   const fetchOptions = {
     headers: {
       ...API_HEADERS,
-      Authorization: `Bearer ${accessToken}`, // Add token to headers
+      ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
     },
     ...options,
   };
 
   const response = await fetch(url, fetchOptions);
 
+  if (response.status === 204) return null;
+
   if (!response.ok) {
-    const errorData = await response.json();
+    const errorData = await response.json().catch(() => ({}));
     throw new Error(errorData.errors?.[0]?.message || 'Unknown error occurred.');
   }
 
