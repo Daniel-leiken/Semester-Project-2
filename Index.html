@@ -16,12 +16,17 @@
   <!-- Header -->
   <header class="bg-white shadow-sm sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-    <div>
-      <img src="images/Logo.svg" alt="BidBound Logo" class="h-12">
-    </div>
-      <div class="flex gap-2 items-center">
-        <input id="search-input" type="text" placeholder="Search listings..." class="border border-gray-300 rounded px-3 py-2 w-64 focus:outline-blue-500">
-        <a href="#" class="text-blue-600 font-semibold hover:underline">Login</a>
+      <div>
+        <img src="images/Logo.svg" alt="BidBound Logo" class="h-12">
+      </div>
+      <div class="flex items-center gap-4">
+        <!-- Search Field -->
+        <input type="text" id="search-input" placeholder="Search auctions..." 
+          class="border border-gray-300 rounded px-3 py-2 w-64 focus:outline-blue-500">
+        <!-- Dynamic Menu -->
+        <div id="header-menu">
+          <!-- Dynamic menu items will be inserted here -->
+        </div>
       </div>
     </div>
   </header>
@@ -116,5 +121,6 @@
 
 <!-- Link the external JavaScript file before the closing body tag -->
 <script src="/js/search.js"></script>
+<script type="module" src="js/header.js"></script>
 </body>
 </html>
