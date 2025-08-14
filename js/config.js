@@ -2,7 +2,6 @@ export const API_BASE_URL = 'https://v2.api.noroff.dev';
 
 export const API_HEADERS = {
   'Content-Type': 'application/json',
-  'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTGVpa2VuIiwiZW1haWwiOiJEYW5TdHIxNjIyMUBzdHVkLm5vcm9mZi5ubyIsImlhdCI6MTc1MDkyNzYwM30.HvSnh9DMUJyqvIakvwpuE4-TeoUniDPX9ozw7931y1g',
   'X-Noroff-API-Key': 'e3234ae6-950d-4fcb-9c01-f2721b2ca931',
 };
 
@@ -16,13 +15,26 @@ export async function apiRequest(endpoint, options = {}) {
   const url = `${API_BASE_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
   const accessToken = localStorage.getItem('accessToken');
 
+  const headers = {
+    ...API_HEADERS,
+  };
+
+  // Only add Authorization header if we have a token
+  if (accessToken) {
+    headers.Authorization = `Bearer ${accessToken}`;
+  }
+
   const fetchOptions = {
-    headers: {
-      ...API_HEADERS,
-      ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
-    },
+    headers,
     ...options,
   };
+
+  console.log('Making API request:', {
+    url,
+    method: fetchOptions.method || 'GET',
+    hasToken: !!accessToken,
+    headers: { ...headers, Authorization: accessToken ? 'Bearer [HIDDEN]' : 'None' }
+  });
 
   const response = await fetch(url, fetchOptions);
 
@@ -30,7 +42,20 @@ export async function apiRequest(endpoint, options = {}) {
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.errors?.[0]?.message || 'Unknown error occurred.');
+    console.error('API Error:', {
+      status: response.status,
+      statusText: response.statusText,
+      errorData
+    });
+    
+    // Handle specific authentication errors
+    if (response.status === 401) {
+      console.error('Authentication failed. Token may be expired.');
+      // Optionally redirect to login
+      // window.location.href = 'Login.html';
+    }
+    
+    throw new Error(errorData.errors?.[0]?.message || `HTTP ${response.status}: ${response.statusText}`);
   }
 
   return response.json();
