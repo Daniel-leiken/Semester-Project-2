@@ -147,18 +147,18 @@ function displayCurrentPage() {
     const buttonText = isAuthenticated ? 'Place Bid' : 'View Details';
 
     listingItem.innerHTML = `
-      <img src="${getImageUrl(media)}" alt="${getImageAlt(media)}" class="w-40 h-28 object-cover rounded-lg" onerror="this.src='images/default-fallback-image.png'">
-      <div class="flex flex-col justify-between">
+      <img src="${getImageUrl(media)}" alt="${getImageAlt(media)}" class="w-24 h-20 sm:w-32 sm:h-24 lg:w-40 lg:h-28 object-cover rounded-lg flex-shrink-0" onerror="this.src='images/default-fallback-image.png'">
+      <div class="flex flex-col justify-between flex-grow min-w-0">
         <div>
-          <h2 class="text-xl font-medium">${title}</h2>
-          <p class="text-sm text-gray-500">Ends in ${timeRemaining(endsAt)}</p>
+          <h2 class="text-base sm:text-lg lg:text-xl font-medium truncate">${title}</h2>
+          <p class="text-xs sm:text-sm text-gray-500">Ends in ${timeRemaining(endsAt)}</p>
         </div>
-        <div class="text-gray-700 text-sm">
-          Current bid: <strong>${highestBid} Credits</strong> (${_count.bids || 0} bids)
+        <div class="text-gray-700 text-xs sm:text-sm">
+          Current bid: <strong>${highestBid} Credits</strong> <span class="hidden sm:inline">(${_count.bids || 0} bids)</span>
         </div>
       </div>
-      <div class="ml-auto flex items-center">
-        <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition" data-id="${id}">${buttonText}</button>
+      <div class="ml-2 sm:ml-auto flex items-center flex-shrink-0">
+        <button class="bg-blue-600 text-white px-2 sm:px-3 lg:px-4 py-1 sm:py-2 text-xs sm:text-sm rounded hover:bg-blue-700 transition" data-id="${id}">${buttonText}</button>
       </div>
     `;
 
@@ -187,12 +187,12 @@ function createPaginationControls() {
 
   const paginationContainer = document.createElement('div');
   paginationContainer.id = 'pagination-controls';
-  paginationContainer.className = 'flex justify-center items-center space-x-2 mt-8 mb-8';
+  paginationContainer.className = 'flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-2 mt-6 sm:mt-8 mb-6 sm:mb-8 px-4 sm:px-0';
 
   // Previous button
   const prevButton = document.createElement('button');
   prevButton.innerHTML = '← Previous';
-  prevButton.className = `px-4 py-2 rounded border transition ${
+  prevButton.className = `px-3 sm:px-4 py-2 rounded border transition text-sm sm:text-base w-1/2 sm:w-auto ${
     currentPage === 1 
       ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200' 
       : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
@@ -206,7 +206,7 @@ function createPaginationControls() {
 
   // Page numbers
   const pageNumbersContainer = document.createElement('div');
-  pageNumbersContainer.className = 'flex space-x-1';
+  pageNumbersContainer.className = 'flex gap-1 sm:gap-1 order-first sm:order-none';
   
   let startPage = Math.max(1, currentPage - 2);
   let endPage = Math.min(totalPages, currentPage + 2);
@@ -240,7 +240,7 @@ function createPaginationControls() {
     if (endPage < totalPages - 1) {
       const ellipsis = document.createElement('span');
       ellipsis.textContent = '...';
-      ellipsis.className = 'px-2 py-2 text-gray-500';
+      ellipsis.className = 'px-1 sm:px-2 py-2 text-gray-500 text-sm sm:text-base';
       pageNumbersContainer.appendChild(ellipsis);
     }
     addPageButton(pageNumbersContainer, totalPages);
@@ -249,7 +249,7 @@ function createPaginationControls() {
   // Next button
   const nextButton = document.createElement('button');
   nextButton.innerHTML = 'Next →';
-  nextButton.className = `px-4 py-2 rounded border transition ${
+  nextButton.className = `px-3 sm:px-4 py-2 rounded border transition text-sm sm:text-base w-1/2 sm:w-auto ${
     currentPage === totalPages 
       ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200' 
       : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
@@ -263,13 +263,17 @@ function createPaginationControls() {
 
   // Page info
   const pageInfo = document.createElement('div');
-  pageInfo.className = 'text-sm text-gray-600 ml-4';
+  pageInfo.className = 'text-xs sm:text-sm text-gray-600 sm:ml-4 order-last';
   pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
 
   // Assemble pagination
-  paginationContainer.appendChild(prevButton);
+  const buttonContainer = document.createElement('div');
+  buttonContainer.className = 'flex gap-2 w-full sm:w-auto sm:contents';
+  buttonContainer.appendChild(prevButton);
+  buttonContainer.appendChild(nextButton);
+  
+  paginationContainer.appendChild(buttonContainer);
   paginationContainer.appendChild(pageNumbersContainer);
-  paginationContainer.appendChild(nextButton);
   paginationContainer.appendChild(pageInfo);
 
   containerParent.insertBefore(paginationContainer, listingsContainer.nextSibling);
@@ -278,7 +282,7 @@ function createPaginationControls() {
 function addPageButton(container, pageNumber) {
   const button = document.createElement('button');
   button.textContent = pageNumber;
-  button.className = `w-10 h-10 rounded border transition ${
+  button.className = `w-8 h-8 sm:w-10 sm:h-10 rounded border transition text-sm sm:text-base ${
     pageNumber === currentPage 
       ? 'bg-blue-600 text-white border-blue-600' 
       : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
@@ -332,44 +336,44 @@ function attachBidModalListener(listingItem, listing) {
 
       // Render modal content
       modalBody.innerHTML = `
-        <div class="bg-gray-200 h-80 w-full flex items-center justify-center text-gray-500 mb-4">
+        <div class="bg-gray-200 h-48 sm:h-64 lg:h-80 w-full flex items-center justify-center text-gray-500 mb-3 sm:mb-4">
           <img src="${getImageUrl(single.media)}" alt="${getImageAlt(single.media)}" class="w-full h-full object-cover" onerror="this.src='images/default-fallback-image.png'">
         </div>
-        <div class="p-6">
-          <h1 class="text-3xl font-semibold mb-2">${single.title}</h1>
-          <p class="text-sm text-red-600 mb-4">Ends in: <span class="font-medium">${timeRemaining(single.endsAt)}</span></p>
-          <div class="mb-6">
-            <h2 class="text-xl font-medium mb-2">Description</h2>
-            <p class="text-gray-700 leading-relaxed">${single.description || 'No description.'}</p>
+        <div class="p-3 sm:p-4 lg:p-6">
+          <h1 class="text-xl sm:text-2xl lg:text-3xl font-semibold mb-2">${single.title}</h1>
+          <p class="text-sm text-red-600 mb-3 sm:mb-4">Ends in: <span class="font-medium">${timeRemaining(single.endsAt)}</span></p>
+          <div class="mb-4 sm:mb-6">
+            <h2 class="text-lg sm:text-xl font-medium mb-2">Description</h2>
+            <p class="text-gray-700 leading-relaxed text-sm sm:text-base">${single.description || 'No description.'}</p>
           </div>
           
           <!-- Bids Section - Only for registered users -->
           ${isAuthenticated ? `
-            <div class="mb-6 border-t border-gray-200 pt-4">
-              <h3 class="text-lg font-medium mb-3">Bid History</h3>
+            <div class="mb-4 sm:mb-6 border-t border-gray-200 pt-3 sm:pt-4">
+              <h3 class="text-base sm:text-lg font-medium mb-2 sm:mb-3">Bid History</h3>
               ${single.bids && single.bids.length > 0 ? `
-                <div class="bg-gray-50 rounded-lg p-4 max-h-48 overflow-y-auto">
-                  <div class="space-y-2">
+                <div class="bg-gray-50 rounded-lg p-3 sm:p-4 max-h-32 sm:max-h-48 overflow-y-auto">
+                  <div class="space-y-1 sm:space-y-2">
                     ${single.bids.slice().sort((a, b) => b.amount - a.amount).map((bid, index) => `
-                      <div class="flex justify-between items-center py-2 px-3 ${index === 0 ? 'bg-green-100 border border-green-300 rounded' : 'border-b border-gray-200 last:border-b-0'}">
-                        <div class="flex items-center gap-2">
-                          <span class="text-sm font-medium">${bid.bidder?.name || 'Anonymous'}</span>
-                          ${index === 0 ? '<span class="text-xs bg-green-600 text-white px-2 py-1 rounded">HIGHEST</span>' : ''}
+                      <div class="flex justify-between items-center py-2 px-2 sm:px-3 ${index === 0 ? 'bg-green-100 border border-green-300 rounded' : 'border-b border-gray-200 last:border-b-0'}">
+                        <div class="flex items-center gap-1 sm:gap-2">
+                          <span class="text-xs sm:text-sm font-medium">${bid.bidder?.name || 'Anonymous'}</span>
+                          ${index === 0 ? '<span class="text-xs bg-green-600 text-white px-1 sm:px-2 py-1 rounded">HIGH</span>' : ''}
                         </div>
                         <div class="text-right">
-                          <div class="text-sm font-medium ${index === 0 ? 'text-green-700' : 'text-gray-700'}">${bid.amount} Credits</div>
+                          <div class="text-xs sm:text-sm font-medium ${index === 0 ? 'text-green-700' : 'text-gray-700'}">${bid.amount} Credits</div>
                           <div class="text-xs text-gray-500">${new Date(bid.created).toLocaleDateString()} ${new Date(bid.created).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
                         </div>
                       </div>
                     `).join('')}
                   </div>
                 </div>
-              ` : '<p class="text-gray-500 text-sm bg-gray-50 rounded-lg p-4">No bids have been placed on this item yet.</p>'}
+              ` : '<p class="text-gray-500 text-xs sm:text-sm bg-gray-50 rounded-lg p-3 sm:p-4">No bids have been placed on this item yet.</p>'}
             </div>
           ` : `
-            <div class="mb-6 border-t border-gray-200 pt-4">
-              <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <p class="text-blue-800 text-sm">
+            <div class="mb-4 sm:mb-6 border-t border-gray-200 pt-3 sm:pt-4">
+              <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 sm:p-4">
+                <p class="text-blue-800 text-xs sm:text-sm">
                   <span class="font-medium">🔒 Bid History</span><br>
                   <a href="login.html" class="text-blue-600 hover:text-blue-800 underline">Login</a> or <a href="signup.html" class="text-blue-600 hover:text-blue-800 underline">register</a> to view all bids on this listing.
                 </p>
@@ -377,29 +381,27 @@ function attachBidModalListener(listingItem, listing) {
             </div>
           `}
           
-          <div class="flex flex-col md:flex-row justify-between items-center gap-4 border-t border-gray-200 pt-4">
-            <div class="text-lg">
+          <div class="flex flex-col gap-3 sm:gap-4 border-t border-gray-200 pt-3 sm:pt-4">
+            <div class="text-sm sm:text-base lg:text-lg">
               Current Bid: <strong class="text-blue-600">${highestBid} Credits</strong>
               <br><small class="text-gray-500">(${single._count?.bids || 0} total bids)</small>
             </div>
             ${isAuthenticated ? `
-              <div class="flex gap-2 items-center">
-                <input id="bid-amount" type="number" min="${highestBid + 1}" placeholder="Min: ${highestBid + 1}" class="border border-gray-300 rounded px-3 py-2 w-36 focus:outline-blue-500">
-                <button id="place-bid-btn" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">Place Bid</button>
+              <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 items-stretch sm:items-center">
+                <input id="bid-amount" type="number" min="${highestBid + 1}" placeholder="Min: ${highestBid + 1}" class="border border-gray-300 rounded px-3 py-2 text-sm sm:text-base flex-1 sm:w-36 sm:flex-none focus:outline-blue-500">
+                <button id="place-bid-btn" class="bg-blue-600 text-white px-4 sm:px-6 py-2 rounded hover:bg-blue-700 transition text-sm sm:text-base font-medium">Place Bid</button>
               </div>
             ` : `
-              <div class="flex gap-2 items-center">
-                <div class="bg-blue-50 border border-blue-200 rounded-lg px-4 py-2">
-                  <p class="text-blue-800 text-sm">
-                    <a href="login.html" class="text-blue-600 hover:text-blue-800 underline font-medium">Login</a> or 
-                    <a href="signup.html" class="text-blue-600 hover:text-blue-800 underline font-medium">register</a> to place bids
-                  </p>
-                </div>
+              <div class="bg-blue-50 border border-blue-200 rounded-lg px-3 sm:px-4 py-2 sm:py-3">
+                <p class="text-blue-800 text-xs sm:text-sm text-center">
+                  <a href="login.html" class="text-blue-600 hover:text-blue-800 underline font-medium">Login</a> or 
+                  <a href="signup.html" class="text-blue-600 hover:text-blue-800 underline font-medium">register</a> to place bids
+                </p>
               </div>
             `}
           </div>
-          <div class="mt-6 border-t border-gray-200 pt-4">
-            <p class="text-sm text-gray-600">Seller: <span class="font-medium">${single.seller?.name || 'Unknown'}</span></p>
+          <div class="mt-3 sm:mt-6 border-t border-gray-200 pt-3 sm:pt-4">
+            <p class="text-xs sm:text-sm text-gray-600">Seller: <span class="font-medium">${single.seller?.name || 'Unknown'}</span></p>
           </div>
         </div>
       `;

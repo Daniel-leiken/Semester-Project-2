@@ -15,19 +15,56 @@
 
   <!-- Header -->
   <header class="bg-white shadow-sm sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-      <div>
+    <!-- Mobile Header -->
+    <div class="block sm:hidden">
+      <div class="flex items-center justify-between px-4 py-3">
+        <!-- Mobile Logo -->
         <a href="index.html">
-          <img src="images/Logo.svg" alt="BidBound Logo" class="h-12">
+          <img src="images/Logo.svg" alt="BidBound Logo" class="h-8">
         </a>
+        
+        <!-- Mobile Menu Button & Credits (for logged in users) -->
+        <div class="flex items-center gap-3">
+          <div id="mobile-credits" class="hidden"></div>
+          <div id="mobile-auth-buttons" class="hidden"></div>
+          <button id="mobile-menu-btn" class="text-gray-600 hover:text-gray-800">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
       </div>
-      <div class="flex items-center gap-4">
-        <!-- Search Field -->
-        <input type="text" id="search-input" placeholder="Search auctions..." 
-          class="border border-gray-300 rounded px-3 py-2 w-64 focus:outline-blue-500">
-        <!-- Dynamic Menu -->
-        <div id="header-menu">
+      
+      <!-- Mobile Search Bar -->
+      <div class="px-4 pb-3">
+        <input type="text" id="search-input-mobile" placeholder="Search auctions..." 
+          class="border border-gray-300 rounded px-3 py-2 w-full focus:outline-blue-500">
+      </div>
+      
+      <!-- Mobile Menu Dropdown -->
+      <div id="mobile-menu" class="hidden border-t border-gray-200 bg-white">
+        <div id="mobile-header-menu" class="px-4 py-3">
           <!-- Dynamic menu items will be inserted here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Desktop Header -->
+    <div class="hidden sm:block">
+      <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <div>
+          <a href="index.html">
+            <img src="images/Logo.svg" alt="BidBound Logo" class="h-12">
+          </a>
+        </div>
+        <div class="flex items-center gap-4">
+          <!-- Search Field -->
+          <input type="text" id="search-input" placeholder="Search auctions..." 
+            class="border border-gray-300 rounded px-3 py-2 w-64 focus:outline-blue-500">
+          <!-- Dynamic Menu -->
+          <div id="header-menu">
+            <!-- Dynamic menu items will be inserted here -->
+          </div>
         </div>
       </div>
     </div>
@@ -35,15 +72,16 @@
 
   <!-- Listings -->
   <main class="max-w-7xl mx-auto px-4 py-10">
-    <div class="flex items-center justify-between mb-6">
-      <h1 class="text-2xl font-semibold">Latest Auctions</h1>
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
+      <h1 class="text-xl sm:text-2xl font-semibold">Latest Auctions</h1>
       <button id="open-create-listing-modal"
-        class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition font-semibold flex items-center gap-2"
+        class="bg-blue-600 text-white px-4 sm:px-6 py-2 sm:py-2 rounded hover:bg-blue-700 transition font-semibold flex items-center justify-center gap-2 text-sm sm:text-base w-full sm:w-auto"
         type="button">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
         </svg>
-        Create Listing
+        <span class="hidden sm:inline">Create Listing</span>
+        <span class="sm:hidden">Create</span>
       </button>
     </div>
 
@@ -52,14 +90,14 @@
   </main>
 
   <!-- Modal Structure -->
-  <div id="modal-overlay" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4 z-60">
-    <div class="modal-content bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto relative">
+  <div id="modal-overlay" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 hidden items-start sm:items-center justify-center pt-20 sm:pt-0 p-3 sm:p-4 z-60">
+    <div class="modal-content bg-white rounded-lg shadow-xl w-full max-w-sm sm:max-w-2xl lg:max-w-4xl max-h-[calc(100vh-100px)] sm:max-h-[90vh] overflow-y-auto relative mt-4 sm:mt-0">
       <!-- Modal loader -->
       <div id="modal-loader" class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-80 hidden z-10">
         <div class="loader border-t-4 border-blue-600 rounded-full w-12 h-12 animate-spin"></div>
       </div>
       <!-- Close button -->
-      <button id="modal-close" class="modal-close absolute top-2 right-3 text-gray-500 hover:text-gray-800 text-3xl cursor-pointer">&times;</button>
+      <button id="modal-close" class="modal-close absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-2xl sm:text-3xl cursor-pointer z-10 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition">&times;</button>
       <div id="modal-body">
         <!-- Listing details will be injected here -->
       </div>
@@ -67,37 +105,37 @@
   </div>
 
   <!-- Create Listing Modal -->
-  <div id="create-listing-modal-overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4 z-60">
-    <div class="bg-white rounded-lg shadow-xl max-w-lg w-full relative">
-      <button id="create-listing-modal-close" class="absolute top-2 right-3 text-gray-500 hover:text-gray-800 text-3xl cursor-pointer">&times;</button>
-      <form id="create-listing-form" class="p-8 flex flex-col gap-4">
-        <h2 class="text-2xl font-semibold mb-2">Create New Listing</h2>
+  <div id="create-listing-modal-overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden items-start sm:items-center justify-center pt-24 sm:pt-0 p-3 sm:p-4 z-60">
+    <div class="bg-white rounded-lg shadow-xl w-full max-w-sm sm:max-w-md lg:max-w-lg relative max-h-[calc(100vh-120px)] sm:max-h-[85vh] overflow-y-auto mt-6 sm:mt-0">
+      <button id="create-listing-modal-close" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-2xl sm:text-3xl cursor-pointer z-10 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition">&times;</button>
+      <form id="create-listing-form" class="p-4 sm:p-6 lg:p-8 flex flex-col gap-3 sm:gap-4">
+        <h2 class="text-lg sm:text-xl lg:text-2xl font-semibold mb-1 sm:mb-2 pr-10">Create New Listing</h2>
         <div>
           <label for="listing-title" class="block text-sm font-medium mb-1">Title <span class="text-red-600">*</span></label>
-          <input id="listing-title" name="title" type="text" required class="border border-gray-300 rounded px-3 py-2 w-full" />
+          <input id="listing-title" name="title" type="text" required class="border border-gray-300 rounded px-3 py-2 w-full text-base" />
         </div>
         <div>
           <label for="listing-description" class="block text-sm font-medium mb-1">Description</label>
-          <textarea id="listing-description" name="description" rows="3" class="border border-gray-300 rounded px-3 py-2 w-full"></textarea>
+          <textarea id="listing-description" name="description" rows="2" class="border border-gray-300 rounded px-3 py-2 w-full text-base resize-none"></textarea>
         </div>
         <div>
           <label for="listing-tags" class="block text-sm font-medium mb-1">Tags (comma separated)</label>
-          <input id="listing-tags" name="tags" type="text" class="border border-gray-300 rounded px-3 py-2 w-full" />
+          <input id="listing-tags" name="tags" type="text" class="border border-gray-300 rounded px-3 py-2 w-full text-base" />
         </div>
         <div>
           <label for="listing-media-url" class="block text-sm font-medium mb-1">Image URL</label>
-          <input id="listing-media-url" name="media-url" type="url" class="border border-gray-300 rounded px-3 py-2 w-full" placeholder="https://example.com/image.jpg" />
+          <input id="listing-media-url" name="media-url" type="url" class="border border-gray-300 rounded px-3 py-2 w-full text-base" placeholder="https://example.com/image.jpg" />
         </div>
         <div>
           <label for="listing-media-alt" class="block text-sm font-medium mb-1">Image Alt Text</label>
-          <input id="listing-media-alt" name="media-alt" type="text" class="border border-gray-300 rounded px-3 py-2 w-full" />
+          <input id="listing-media-alt" name="media-alt" type="text" class="border border-gray-300 rounded px-3 py-2 w-full text-base" />
         </div>
         <div>
           <label for="listing-endsAt" class="block text-sm font-medium mb-1">Ends At <span class="text-red-600">*</span></label>
-          <input id="listing-endsAt" name="endsAt" type="datetime-local" required class="border border-gray-300 rounded px-3 py-2 w-full" />
+          <input id="listing-endsAt" name="endsAt" type="datetime-local" required class="border border-gray-300 rounded px-3 py-2 w-full text-base" />
         </div>
         <div id="create-listing-message" class="hidden text-center text-sm rounded px-2 py-1"></div>
-        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition mt-2">Create Listing</button>
+        <button type="submit" class="bg-blue-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded hover:bg-blue-700 transition mt-2 text-base font-semibold">Create Listing</button>
       </form>
     </div>
   </div>
@@ -108,8 +146,8 @@
   </div>
 
 <!-- Link the external JavaScript file before the closing body tag -->
-<script src="/js/search.js"></script>
+<script src="js/search.js"></script>
 <script type="module" src="js/header.js"></script>
-<script type="module" src="/js/listings.js"></script>
+<script type="module" src="js/listings.js"></script>
 </body>
 </html>

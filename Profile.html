@@ -12,14 +12,48 @@
 
   <!-- Header -->
   <header class="bg-white shadow-sm sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+    <!-- Mobile Header -->
+    <div class="block sm:hidden">
+      <div class="flex items-center justify-between px-4 py-3">
+        <!-- Mobile Logo -->
+        <a href="index.html">
+          <img src="images/Logo.svg" alt="BidBound Logo" class="h-8">
+        </a>
+        
+        <!-- Mobile Menu Button & Credits (for logged in users) -->
+        <div class="flex items-center gap-3">
+          <div id="mobile-credits" class="hidden"></div>
+          <div id="mobile-auth-buttons" class="hidden"></div>
+          <button id="mobile-menu-btn" class="text-gray-600 hover:text-gray-800">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Mobile Menu Dropdown -->
+      <div id="mobile-menu" class="hidden border-t border-gray-200 bg-white">
+        <div id="mobile-header-menu" class="px-4 py-3">
+          <!-- Dynamic menu items will be inserted here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Desktop Header -->
+    <div class="hidden sm:block">
+      <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
         <div>
-            <a href="index.html">
-              <img src="images/Logo.svg" alt="BidBound Logo" class="h-12">
-            </a>
+          <a href="index.html">
+            <img src="images/Logo.svg" alt="BidBound Logo" class="h-12">
+          </a>
+        </div>
+        <div class="flex items-center gap-4">
+          <!-- Dynamic Menu -->
+          <div id="header-menu">
+            <!-- Dynamic menu items will be inserted here -->
           </div>
-      <div id="header-menu">
-        <!-- Dynamic menu items will be inserted here -->
+        </div>
       </div>
     </div>
   </header>
@@ -40,7 +74,7 @@
         <button id="edit-avatar" class="absolute bottom-2 right-2 bg-blue-600 text-white px-2 py-1 rounded hover:bg-blue-700 transition">Upload</button>
       </div>
       <div>
-        <h1 id="profile-name" class="text-2xl font-semibold"></h1>
+        <h1 id="profile-name" class="text-xl sm:text-2xl font-semibold"></h1>
         <p id="profile-email" class="text-gray-600"></p>
         <div class="relative">
           <p id="profile-bio" class="text-gray-700 mt-2"></p>
@@ -49,14 +83,14 @@
       </div>
     </div>
     <div class="mt-6">
-      <h2 class="text-xl font-semibold mb-4">Your Listings</h2>
+      <h2 class="text-lg sm:text-xl font-semibold mb-4">Your Listings</h2>
       <ul id="user-listings" class="space-y-4">
         <!-- Listings will be dynamically inserted here -->
       </ul>
     </div>
     
     <div class="mt-8">
-      <h2 class="text-xl font-semibold mb-4">Listings You've Bid On</h2>
+      <h2 class="text-lg sm:text-xl font-semibold mb-4">Listings You've Bid On</h2>
       <ul id="bid-listings" class="space-y-4">
         <!-- Bid listings will be dynamically inserted here -->
       </ul>
@@ -68,14 +102,14 @@
   </div>
 
   <!-- Modal Structure -->
-  <div id="modal-overlay" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4 z-60">
-    <div class="modal-content bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto relative">
+  <div id="modal-overlay" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 hidden items-start sm:items-center justify-center pt-20 sm:pt-0 p-3 sm:p-4 z-60">
+    <div class="modal-content bg-white rounded-lg shadow-xl w-full max-w-sm sm:max-w-2xl lg:max-w-4xl max-h-[calc(100vh-100px)] sm:max-h-[90vh] overflow-y-auto relative mt-4 sm:mt-0">
       <!-- Modal loader -->
       <div id="modal-loader" class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-80 hidden z-10">
         <div class="loader border-t-4 border-blue-600 rounded-full w-12 h-12 animate-spin"></div>
       </div>
       <!-- Close button -->
-      <button id="modal-close" class="modal-close absolute top-2 right-3 text-gray-500 hover:text-gray-800 text-3xl cursor-pointer">&times;</button>
+      <button id="modal-close" class="modal-close absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-2xl sm:text-3xl cursor-pointer z-10 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition">&times;</button>
       <div id="modal-body"></div>
     </div>
   </div>

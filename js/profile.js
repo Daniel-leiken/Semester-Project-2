@@ -72,16 +72,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         );
 
         listingItem.innerHTML = `
-          <img src="${getImageUrl(media)}" alt="${getImageAlt(media)}" class="w-40 h-28 object-cover rounded-lg" onerror="this.src='images/default-fallback-image.png'">
-          <div class="flex flex-col justify-between">
+          <img src="${getImageUrl(media)}" alt="${getImageAlt(media)}" class="w-24 h-20 sm:w-32 sm:h-24 lg:w-40 lg:h-28 object-cover rounded-lg flex-shrink-0" onerror="this.src='images/default-fallback-image.png'">
+          <div class="flex flex-col justify-between flex-grow min-w-0">
             <div>
-              <h2 class="text-xl font-medium">${title}</h2>
-              <p class="text-sm text-gray-500">Ends in ${timeRemaining(endsAt)}</p>
+              <h2 class="text-base sm:text-lg lg:text-xl font-medium truncate">${title}</h2>
+              <p class="text-xs sm:text-sm text-gray-500">Ends in ${timeRemaining(endsAt)}</p>
             </div>
-            <div class="text-gray-700 text-sm">Current bid: <strong>${_count?.bids || 0} Credits</strong></div>
+            <div class="text-gray-700 text-xs sm:text-sm">Current bid: <strong>${_count?.bids || 0} Credits</strong></div>
           </div>
-          <div class="ml-auto flex items-center">
-            <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition" data-id="${id}">Place Bid</button>
+          <div class="ml-2 sm:ml-auto flex items-center flex-shrink-0">
+            <button class="bg-blue-600 text-white px-2 sm:px-3 lg:px-4 py-1 sm:py-2 text-xs sm:text-sm rounded hover:bg-blue-700 transition" data-id="${id}">Place Bid</button>
           </div>
         `;
         userListingsContainer.appendChild(listingItem);
@@ -108,82 +108,107 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (isOwner) {
               // Render modal content for your own listing (no bidding, show bids)
               modalBody.innerHTML = `
-                <div class="bg-gray-200 h-80 w-full flex items-center justify-center text-gray-500 mb-4">
+                <div class="bg-gray-200 h-48 sm:h-64 lg:h-80 w-full flex items-center justify-center text-gray-500 mb-3 sm:mb-4">
                   <img src="${getImageUrl(single.media)}" alt="${getImageAlt(single.media)}" class="w-full h-full object-cover" onerror="this.src='images/default-fallback-image.png'">
                 </div>
-                <div class="p-6">
-                  <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
-                    <p class="text-blue-800 text-sm font-medium">📋 This is your listing</p>
+                <div class="p-3 sm:p-4 lg:p-6">
+                  <div class="bg-blue-50 border border-blue-200 rounded-lg p-2 sm:p-3 mb-3 sm:mb-4">
+                    <p class="text-blue-800 text-xs sm:text-sm font-medium">📋 This is your listing</p>
                   </div>
-                  <h1 class="text-3xl font-semibold mb-2">${single.title}</h1>
-                  <p class="text-sm text-red-600 mb-4">Ends in: <span class="font-medium">${timeRemaining(single.endsAt)}</span></p>
-                  <div class="mb-6">
-                    <h2 class="text-xl font-medium mb-2">Description</h2>
-                    <p class="text-gray-700 leading-relaxed">${single.description || 'No description.'}</p>
+                  <h1 class="text-xl sm:text-2xl lg:text-3xl font-semibold mb-2">${single.title}</h1>
+                  <p class="text-sm text-red-600 mb-3 sm:mb-4">Ends in: <span class="font-medium">${timeRemaining(single.endsAt)}</span></p>
+                  <div class="mb-4 sm:mb-6">
+                    <h2 class="text-lg sm:text-xl font-medium mb-2">Description</h2>
+                    <p class="text-gray-700 leading-relaxed text-sm sm:text-base">${single.description || 'No description.'}</p>
                   </div>
-                  <div class="border-t border-gray-200 pt-4">
-                    <div class="text-lg mb-4">
+                  <div class="border-t border-gray-200 pt-3 sm:pt-4">
+                    <div class="text-sm sm:text-base lg:text-lg mb-3 sm:mb-4">
                       Current Highest Bid: <strong class="text-green-600">${highestBid} Credits</strong>
                       <br><small class="text-gray-500">(${single._count?.bids || 0} total bids)</small>
                     </div>
                     
-                    <div class="mb-4">
-                      <h3 class="text-lg font-medium mb-3">All Bids on Your Listing</h3>
+                    <div class="mb-3 sm:mb-4">
+                      <h3 class="text-base sm:text-lg font-medium mb-2 sm:mb-3">All Bids on Your Listing</h3>
                       ${single.bids && single.bids.length > 0 ? `
-                        <div class="bg-gray-50 rounded-lg p-4 max-h-64 overflow-y-auto">
-                          <div class="space-y-3">
+                        <div class="bg-gray-50 rounded-lg p-3 sm:p-4 max-h-48 sm:max-h-64 overflow-y-auto">
+                          <div class="space-y-2 sm:space-y-3">
                             ${single.bids.slice().sort((a, b) => b.amount - a.amount).map((bid, index) => `
-                              <div class="flex justify-between items-start py-3 px-4 ${index === 0 ? 'bg-green-100 border border-green-300 rounded-lg' : 'bg-white border border-gray-200 rounded-lg'}">
+                              <div class="flex justify-between items-start py-2 sm:py-3 px-2 sm:px-4 ${index === 0 ? 'bg-green-100 border border-green-300 rounded-lg' : 'bg-white border border-gray-200 rounded-lg'}">
                                 <div class="flex flex-col">
-                                  <div class="flex items-center gap-2 mb-1">
-                                    <span class="text-sm font-medium">${bid.bidder?.name || 'Anonymous'}</span>
-                                    ${index === 0 ? '<span class="text-xs bg-green-600 text-white px-2 py-1 rounded">WINNING BID</span>' : ''}
+                                  <div class="flex items-center gap-1 sm:gap-2 mb-1">
+                                    <span class="text-xs sm:text-sm font-medium">${bid.bidder?.name || 'Anonymous'}</span>
+                                    ${index === 0 ? '<span class="text-xs bg-green-600 text-white px-1 sm:px-2 py-1 rounded">WINNING</span>' : ''}
                                   </div>
                                   <div class="text-xs text-gray-500">
                                     ${new Date(bid.created).toLocaleDateString()} at ${new Date(bid.created).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
                                   </div>
                                 </div>
                                 <div class="text-right">
-                                  <div class="text-lg font-medium ${index === 0 ? 'text-green-700' : 'text-gray-700'}">${bid.amount} Credits</div>
+                                  <div class="text-sm sm:text-base lg:text-lg font-medium ${index === 0 ? 'text-green-700' : 'text-gray-700'}">${bid.amount} Credits</div>
                                 </div>
                               </div>
                             `).join('')}
                           </div>
                         </div>
-                      ` : '<p class="text-gray-500 text-sm bg-gray-50 rounded-lg p-4">No bids have been placed on this listing yet.</p>'}
+                      ` : '<p class="text-gray-500 text-xs sm:text-sm bg-gray-50 rounded-lg p-3 sm:p-4">No bids have been placed on this listing yet.</p>'}
                     </div>
                     
                   </div>
-                  <div class="mt-6 border-t border-gray-200 pt-4 flex justify-between items-center">
-                    <p class="text-sm text-gray-600">Listed by: <span class="font-medium">${single.seller?.name || 'You'}</span></p>
-                    <button id="delete-listing-btn" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition text-sm">Delete Listing</button>
+                  <div class="mt-4 sm:mt-6 border-t border-gray-200 pt-3 sm:pt-4 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+                    <p class="text-xs sm:text-sm text-gray-600">Listed by: <span class="font-medium">${single.seller?.name || 'You'}</span></p>
+                    <button id="delete-listing-btn" class="bg-red-600 text-white px-3 sm:px-4 py-2 rounded hover:bg-red-700 transition text-xs sm:text-sm">Delete Listing</button>
                   </div>
                 </div>
               `;
             } else {
               // Render modal content for bidding on others' listings
               modalBody.innerHTML = `
-                <div class="bg-gray-200 h-80 w-full flex items-center justify-center text-gray-500 mb-4">
+                <div class="bg-gray-200 h-48 sm:h-64 lg:h-80 w-full flex items-center justify-center text-gray-500 mb-3 sm:mb-4">
                   <img src="${getImageUrl(single.media)}" alt="${getImageAlt(single.media)}" class="w-full h-full object-cover" onerror="this.src='images/default-fallback-image.png'">
                 </div>
-                <div class="p-6">
-                  <h1 class="text-3xl font-semibold mb-2">${single.title}</h1>
-                  <p class="text-sm text-red-600 mb-4">Ends in: <span class="font-medium">${timeRemaining(single.endsAt)}</span></p>
-                  <div class="mb-6">
-                    <h2 class="text-xl font-medium mb-2">Description</h2>
-                    <p class="text-gray-700 leading-relaxed">${single.description || 'No description.'}</p>
+                <div class="p-3 sm:p-4 lg:p-6">
+                  <h1 class="text-xl sm:text-2xl lg:text-3xl font-semibold mb-2">${single.title}</h1>
+                  <p class="text-sm text-red-600 mb-3 sm:mb-4">Ends in: <span class="font-medium">${timeRemaining(single.endsAt)}</span></p>
+                  <div class="mb-4 sm:mb-6">
+                    <h2 class="text-lg sm:text-xl font-medium mb-2">Description</h2>
+                    <p class="text-gray-700 leading-relaxed text-sm sm:text-base">${single.description || 'No description.'}</p>
                   </div>
-                  <div class="flex flex-col md:flex-row justify-between items-center gap-4 border-t border-gray-200 pt-4">
-                    <div class="text-lg">
+                  
+                  <!-- Bids Section -->
+                  <div class="mb-4 sm:mb-6 border-t border-gray-200 pt-3 sm:pt-4">
+                    <h3 class="text-base sm:text-lg font-medium mb-2 sm:mb-3">Bid History</h3>
+                    ${single.bids && single.bids.length > 0 ? `
+                      <div class="bg-gray-50 rounded-lg p-3 sm:p-4 max-h-32 sm:max-h-48 overflow-y-auto">
+                        <div class="space-y-1 sm:space-y-2">
+                          ${single.bids.slice().sort((a, b) => b.amount - a.amount).map((bid, index) => `
+                            <div class="flex justify-between items-center py-2 px-2 sm:px-3 ${index === 0 ? 'bg-green-100 border border-green-300 rounded' : 'border-b border-gray-200 last:border-b-0'}">
+                              <div class="flex items-center gap-1 sm:gap-2">
+                                <span class="text-xs sm:text-sm font-medium">${bid.bidder?.name || 'Anonymous'}</span>
+                                ${index === 0 ? '<span class="text-xs bg-green-600 text-white px-1 sm:px-2 py-1 rounded">HIGH</span>' : ''}
+                              </div>
+                              <div class="text-right">
+                                <div class="text-xs sm:text-sm font-medium ${index === 0 ? 'text-green-700' : 'text-gray-700'}">${bid.amount} Credits</div>
+                                <div class="text-xs text-gray-500">${new Date(bid.created).toLocaleDateString()} ${new Date(bid.created).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
+                              </div>
+                            </div>
+                          `).join('')}
+                        </div>
+                      </div>
+                    ` : '<p class="text-gray-500 text-xs sm:text-sm bg-gray-50 rounded-lg p-3 sm:p-4">No bids have been placed on this item yet.</p>'}
+                  </div>
+                  
+                  <div class="flex flex-col gap-3 sm:gap-4 border-t border-gray-200 pt-3 sm:pt-4">
+                    <div class="text-sm sm:text-base lg:text-lg">
                       Current Bid: <strong class="text-blue-600">${highestBid} Credits</strong>
+                      <br><small class="text-gray-500">(${single._count?.bids || 0} total bids)</small>
                     </div>
-                    <div class="flex gap-2 items-center">
-                      <input id="bid-amount" type="number" min="1" placeholder="Your Bid (NOK)" class="border border-gray-300 rounded px-3 py-2 w-36 focus:outline-blue-500">
-                      <button id="place-bid-btn" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">Place Bid</button>
+                    <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 items-stretch sm:items-center">
+                      <input id="bid-amount" type="number" min="${highestBid + 1}" placeholder="Min: ${highestBid + 1}" class="border border-gray-300 rounded px-3 py-2 text-sm sm:text-base flex-1 sm:w-36 sm:flex-none focus:outline-blue-500">
+                      <button id="place-bid-btn" class="bg-blue-600 text-white px-4 sm:px-6 py-2 rounded hover:bg-blue-700 transition text-sm sm:text-base font-medium">Place Bid</button>
                     </div>
                   </div>
-                  <div class="mt-6 border-t border-gray-200 pt-4">
-                    <p class="text-sm text-gray-600">Seller: <span class="font-medium">${single.seller?.name || 'Unknown'}</span></p>
+                  <div class="mt-3 sm:mt-6 border-t border-gray-200 pt-3 sm:pt-4">
+                    <p class="text-xs sm:text-sm text-gray-600">Seller: <span class="font-medium">${single.seller?.name || 'Unknown'}</span></p>
                   </div>
                 </div>
               `;
@@ -447,23 +472,26 @@ async function loadBidListings(userName) {
       );
 
       listingItem.innerHTML = `
-        <img src="${getImageUrl(media)}" alt="${getImageAlt(media)}" class="w-40 h-28 object-cover rounded-lg" onerror="this.src='images/default-fallback-image.png'">
-        <div class="flex flex-col justify-between flex-grow">
+        <img src="${getImageUrl(media)}" alt="${getImageAlt(media)}" class="w-24 h-20 sm:w-32 sm:h-24 lg:w-40 lg:h-28 object-cover rounded-lg flex-shrink-0" onerror="this.src='images/default-fallback-image.png'">
+        <div class="flex flex-col justify-between flex-grow min-w-0">
           <div>
-            <h2 class="text-xl font-medium">${title}</h2>
-            <p class="text-sm text-gray-500">Ends in ${timeRemaining(endsAt)}</p>
-            <p class="text-sm text-gray-600">Seller: <span class="font-medium">${seller?.name || 'Unknown'}</span></p>
+            <h2 class="text-base sm:text-lg lg:text-xl font-medium truncate">${title}</h2>
+            <p class="text-xs sm:text-sm text-gray-500">Ends in ${timeRemaining(endsAt)}</p>
+            <p class="text-xs sm:text-sm text-gray-600 hidden sm:block">Seller: <span class="font-medium">${seller?.name || 'Unknown'}</span></p>
           </div>
-          <div class="text-sm">
-            <div class="flex justify-between items-center">
-              <span>Your highest bid: <strong class="text-blue-600">${userHighestBid} Credits</strong></span>
-              ${isWinning ? '<span class="text-green-600 font-medium text-xs bg-green-100 px-2 py-1 rounded">WINNING</span>' : ''}
+          <div class="text-xs sm:text-sm">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
+              <span class="truncate">Your bid: <strong class="text-blue-600">${userHighestBid} Credits</strong></span>
+              ${isWinning ? '<span class="text-green-600 font-medium text-xs bg-green-100 px-1 sm:px-2 py-0.5 sm:py-1 rounded w-fit">WINNING</span>' : ''}
             </div>
-            <div class="text-gray-600">Current highest: <strong>${highestBid} Credits</strong></div>
+            <div class="text-gray-600 text-xs sm:text-sm">Current: <strong>${highestBid} Credits</strong></div>
           </div>
         </div>
-        <div class="ml-auto flex items-center">
-          <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition" data-id="${id}">View & Bid</button>
+        <div class="ml-2 sm:ml-auto flex items-center flex-shrink-0">
+          <button class="bg-blue-600 text-white px-2 sm:px-3 lg:px-4 py-1 sm:py-2 text-xs sm:text-sm rounded hover:bg-blue-700 transition" data-id="${id}">
+            <span class="hidden sm:inline">View & Bid</span>
+            <span class="sm:hidden">Bid</span>
+          </button>
         </div>
       `;
       
@@ -489,61 +517,52 @@ async function loadBidListings(userName) {
 
           // Render modal content for bidding (you're not the owner)
           modalBody.innerHTML = `
-            <div class="bg-gray-200 h-80 w-full flex items-center justify-center text-gray-500 mb-4">
+            <div class="bg-gray-200 h-48 sm:h-64 lg:h-80 w-full flex items-center justify-center text-gray-500 mb-3 sm:mb-4">
               <img src="${getImageUrl(single.media)}" alt="${getImageAlt(single.media)}" class="w-full h-full object-cover" onerror="this.src='images/default-fallback-image.png'">
             </div>
-            <div class="p-6">
-              <h1 class="text-3xl font-semibold mb-2">${single.title}</h1>
-              <p class="text-sm text-red-600 mb-4">Ends in: <span class="font-medium">${timeRemaining(single.endsAt)}</span></p>
-              <div class="mb-6">
-                <h2 class="text-xl font-medium mb-2">Description</h2>
-                <p class="text-gray-700 leading-relaxed">${single.description || 'No description.'}</p>
+            <div class="p-3 sm:p-4 lg:p-6">
+              <h1 class="text-xl sm:text-2xl lg:text-3xl font-semibold mb-2">${single.title}</h1>
+              <p class="text-sm text-red-600 mb-3 sm:mb-4">Ends in: <span class="font-medium">${timeRemaining(single.endsAt)}</span></p>
+              <div class="mb-4 sm:mb-6">
+                <h2 class="text-lg sm:text-xl font-medium mb-2">Description</h2>
+                <p class="text-gray-700 leading-relaxed text-sm sm:text-base">${single.description || 'No description.'}</p>
               </div>
               
-              <div class="border-t border-gray-200 pt-4 mb-4">
-                <div class="text-lg mb-4">
-                  Current Highest Bid: <strong class="text-green-600">${currentHighestBid} Credits</strong>
+              <!-- Bids Section -->
+              <div class="mb-4 sm:mb-6 border-t border-gray-200 pt-3 sm:pt-4">
+                <h3 class="text-base sm:text-lg font-medium mb-2 sm:mb-3">Bid History</h3>
+                ${single.bids && single.bids.length > 0 ? `
+                  <div class="bg-gray-50 rounded-lg p-3 sm:p-4 max-h-32 sm:max-h-48 overflow-y-auto">
+                    <div class="space-y-1 sm:space-y-2">
+                      ${single.bids.slice().sort((a, b) => b.amount - a.amount).map((bid, index) => `
+                        <div class="flex justify-between items-center py-2 px-2 sm:px-3 ${index === 0 ? 'bg-green-100 border border-green-300 rounded' : 'border-b border-gray-200 last:border-b-0'}">
+                          <div class="flex items-center gap-1 sm:gap-2">
+                            <span class="text-xs sm:text-sm font-medium">${bid.bidder?.name || 'Anonymous'}</span>
+                            ${index === 0 ? '<span class="text-xs bg-green-600 text-white px-1 sm:px-2 py-1 rounded">HIGH</span>' : ''}
+                          </div>
+                          <div class="text-right">
+                            <div class="text-xs sm:text-sm font-medium ${index === 0 ? 'text-green-700' : 'text-gray-700'}">${bid.amount} Credits</div>
+                            <div class="text-xs text-gray-500">${new Date(bid.created).toLocaleDateString()} ${new Date(bid.created).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
+                          </div>
+                        </div>
+                      `).join('')}
+                    </div>
+                  </div>
+                ` : '<p class="text-gray-500 text-xs sm:text-sm bg-gray-50 rounded-lg p-3 sm:p-4">No bids have been placed on this item yet.</p>'}
+              </div>
+              
+              <div class="flex flex-col gap-3 sm:gap-4 border-t border-gray-200 pt-3 sm:pt-4">
+                <div class="text-sm sm:text-base lg:text-lg">
+                  Current Bid: <strong class="text-blue-600">${currentHighestBid} Credits</strong>
                   <br><small class="text-gray-500">(${single._count?.bids || 0} total bids)</small>
                 </div>
-                
-                <div class="mb-4">
-                  <h3 class="text-lg font-medium mb-3">All Bids on This Listing</h3>
-                  ${single.bids && single.bids.length > 0 ? `
-                    <div class="bg-gray-50 rounded-lg p-4 max-h-64 overflow-y-auto">
-                      <div class="space-y-3">
-                        ${single.bids.slice().sort((a, b) => b.amount - a.amount).map((bid, index) => {
-                          const isCurrentUser = bid.bidder?.name === userName;
-                          return `
-                            <div class="flex justify-between items-start py-3 px-4 ${index === 0 ? 'bg-green-100 border border-green-300 rounded-lg' : isCurrentUser ? 'bg-blue-50 border border-blue-200 rounded-lg' : 'bg-white border border-gray-200 rounded-lg'}">
-                              <div class="flex flex-col">
-                                <div class="flex items-center gap-2 mb-1">
-                                  <span class="text-sm font-medium ${isCurrentUser ? 'text-blue-700' : ''}">${bid.bidder?.name || 'Anonymous'} ${isCurrentUser ? '(You)' : ''}</span>
-                                  ${index === 0 ? '<span class="text-xs bg-green-600 text-white px-2 py-1 rounded">WINNING BID</span>' : ''}
-                                </div>
-                                <div class="text-xs text-gray-500">
-                                  ${new Date(bid.created).toLocaleDateString()} at ${new Date(bid.created).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
-                                </div>
-                              </div>
-                              <div class="text-right">
-                                <div class="text-lg font-medium ${index === 0 ? 'text-green-700' : isCurrentUser ? 'text-blue-700' : 'text-gray-700'}">${bid.amount} Credits</div>
-                              </div>
-                            </div>
-                          `;
-                        }).join('')}
-                      </div>
-                    </div>
-                  ` : '<p class="text-gray-500 text-sm bg-gray-50 rounded-lg p-4">No bids have been placed on this listing yet.</p>'}
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 items-stretch sm:items-center">
+                  <input id="bid-amount" type="number" min="${currentHighestBid + 1}" placeholder="Min: ${currentHighestBid + 1}" class="border border-gray-300 rounded px-3 py-2 text-sm sm:text-base flex-1 sm:w-36 sm:flex-none focus:outline-blue-500">
+                  <button id="place-bid-btn" class="bg-blue-600 text-white px-4 sm:px-6 py-2 rounded hover:bg-blue-700 transition text-sm sm:text-base font-medium">Place Bid</button>
                 </div>
               </div>
-              
-              <div class="flex flex-col md:flex-row justify-between items-center gap-4 border-t border-gray-200 pt-4">
-                <div class="text-sm text-gray-600">
-                  <p>Seller: <span class="font-medium">${single.seller?.name || 'Unknown'}</span></p>
-                </div>
-                <div class="flex gap-2 items-center">
-                  <input id="bid-amount" type="number" min="1" placeholder="Your Bid (Credits)" class="border border-gray-300 rounded px-3 py-2 w-36 focus:outline-blue-500">
-                  <button id="place-bid-btn" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">Place Bid</button>
-                </div>
+              <div class="mt-3 sm:mt-6 border-t border-gray-200 pt-3 sm:pt-4">
+                <p class="text-xs sm:text-sm text-gray-600">Seller: <span class="font-medium">${single.seller?.name || 'Unknown'}</span></p>
               </div>
             </div>
           `;

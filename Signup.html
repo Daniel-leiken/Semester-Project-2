@@ -12,76 +12,111 @@
 
   <!-- Header -->
   <header class="bg-white shadow-sm sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+    <!-- Mobile Header -->
+    <div class="block sm:hidden">
+      <div class="flex items-center justify-between px-4 py-3">
+        <!-- Mobile Logo -->
+        <a href="index.html">
+          <img src="images/Logo.svg" alt="BidBound Logo" class="h-8">
+        </a>
+        
+        <!-- Mobile Menu Button & Credits (for logged in users) -->
+        <div class="flex items-center gap-3">
+          <div id="mobile-credits" class="hidden"></div>
+          <div id="mobile-auth-buttons" class="hidden"></div>
+          <button id="mobile-menu-btn" class="text-gray-600 hover:text-gray-800">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Mobile Menu Dropdown -->
+      <div id="mobile-menu" class="hidden border-t border-gray-200 bg-white">
+        <div id="mobile-header-menu" class="px-4 py-3">
+          <!-- Dynamic menu items will be inserted here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Desktop Header -->
+    <div class="hidden sm:block">
+      <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
         <div>
-            <a href="index.html">
-              <img src="images/Logo.svg" alt="BidBound Logo" class="h-12">
-            </a>
-          </div>
-      <div>
-        <a href="index.html" class="text-blue-600 font-semibold hover:underline">Back to Auctions</a>
+          <a href="index.html">
+            <img src="images/Logo.svg" alt="BidBound Logo" class="h-12">
+          </a>
+        </div>
+        <div>
+          <a href="index.html" class="text-blue-600 font-semibold hover:underline">Back to Auctions</a>
+        </div>
       </div>
     </div>
   </header>
 
   <!-- Sign Up Form -->
-  <main class="max-w-md mx-auto px-4 py-10 bg-white shadow-md rounded-lg">
-    <h1 class="text-2xl font-semibold mb-6 text-center">Sign Up for BidBound</h1>
-    <form id="signup-form" action="#" method="POST" class="space-y-4">
-      <div>
-        <label for="name" class="block text-sm font-medium text-gray-700">Username</label>
-        <input type="text" id="name" name="name" required
-          class="border border-gray-300 rounded px-3 py-2 w-full focus:outline-blue-500">
+  <main class="max-w-md mx-auto px-4 py-6 sm:py-10">
+    <div class="bg-white shadow-md rounded-lg p-4 sm:p-6">
+      <h1 class="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6 text-center">Sign Up for BidBound</h1>
+      
+      <!-- Message Box -->
+      <div id="message-box" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4" role="alert">
+        <span id="message-text"></span>
       </div>
-      <div>
-        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-        <input type="email" id="email" name="email" required
-          class="border border-gray-300 rounded px-3 py-2 w-full focus:outline-blue-500">
-      </div>
-      <div>
-        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-        <input type="password" id="password" name="password" required
-          class="border border-gray-300 rounded px-3 py-2 w-full focus:outline-blue-500">
-      </div>
-      <div>
-        <label for="bio" class="block text-sm font-medium text-gray-700">Bio (Optional)</label>
-        <textarea id="bio" name="bio" maxlength="160"
-          class="border border-gray-300 rounded px-3 py-2 w-full focus:outline-blue-500"></textarea>
-      </div>
-      <div>
-        <label for="avatar-url" class="block text-sm font-medium text-gray-700">Avatar URL (Optional)</label>
-        <input type="url" id="avatar-url" name="avatar-url"
-          class="border border-gray-300 rounded px-3 py-2 w-full focus:outline-blue-500">
-      </div>
-      <div>
-        <label for="avatar-alt" class="block text-sm font-medium text-gray-700">Avatar Alt Text (Optional)</label>
-        <input type="text" id="avatar-alt" name="avatar-alt" maxlength="120"
-          class="border border-gray-300 rounded px-3 py-2 w-full focus:outline-blue-500">
-      </div>
-      <div>
-        <label for="banner-url" class="block text-sm font-medium text-gray-700">Banner URL (Optional)</label>
-        <input type="url" id="banner-url" name="banner-url"
-          class="border border-gray-300 rounded px-3 py-2 w-full focus:outline-blue-500">
-      </div>
-      <div>
-        <label for="banner-alt" class="block text-sm font-medium text-gray-700">Banner Alt Text (Optional)</label>
-        <input type="text" id="banner-alt" name="banner-alt" maxlength="120"
-          class="border border-gray-300 rounded px-3 py-2 w-full focus:outline-blue-500">
-      </div>
-      <button type="submit"
-        class="bg-blue-600 text-white px-6 py-2 rounded w-full hover:bg-blue-700 transition">Sign Up</button>
-    </form>
-    <p class="text-sm text-center text-gray-600 mt-4">
-      Already have an account? <a href="login.html" class="text-blue-600 hover:underline">Login</a>
-    </p>
 
-    <!-- Meldingsboks -->
-    <div id="message-box" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4" role="alert">
-      <span id="message-text"></span>
+      <form id="signup-form" action="#" method="POST" class="space-y-4">
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-700">Username</label>
+          <input type="text" id="name" name="name" required
+            class="border border-gray-300 rounded px-3 py-2 w-full focus:outline-blue-500">
+        </div>
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+          <input type="email" id="email" name="email" required
+            class="border border-gray-300 rounded px-3 py-2 w-full focus:outline-blue-500">
+        </div>
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+          <input type="password" id="password" name="password" required
+            class="border border-gray-300 rounded px-3 py-2 w-full focus:outline-blue-500">
+        </div>
+        <div>
+          <label for="bio" class="block text-sm font-medium text-gray-700">Bio (Optional)</label>
+          <textarea id="bio" name="bio" maxlength="160"
+            class="border border-gray-300 rounded px-3 py-2 w-full focus:outline-blue-500"></textarea>
+        </div>
+        <div>
+          <label for="avatar-url" class="block text-sm font-medium text-gray-700">Avatar URL (Optional)</label>
+          <input type="url" id="avatar-url" name="avatar-url"
+            class="border border-gray-300 rounded px-3 py-2 w-full focus:outline-blue-500">
+        </div>
+        <div>
+          <label for="avatar-alt" class="block text-sm font-medium text-gray-700">Avatar Alt Text (Optional)</label>
+          <input type="text" id="avatar-alt" name="avatar-alt" maxlength="120"
+            class="border border-gray-300 rounded px-3 py-2 w-full focus:outline-blue-500">
+        </div>
+        <div>
+          <label for="banner-url" class="block text-sm font-medium text-gray-700">Banner URL (Optional)</label>
+          <input type="url" id="banner-url" name="banner-url"
+            class="border border-gray-300 rounded px-3 py-2 w-full focus:outline-blue-500">
+        </div>
+        <div>
+          <label for="banner-alt" class="block text-sm font-medium text-gray-700">Banner Alt Text (Optional)</label>
+          <input type="text" id="banner-alt" name="banner-alt" maxlength="120"
+            class="border border-gray-300 rounded px-3 py-2 w-full focus:outline-blue-500">
+        </div>
+        <button type="submit"
+          class="bg-blue-600 text-white px-6 py-2 rounded w-full hover:bg-blue-700 transition">Sign Up</button>
+      </form>
+      <p class="text-sm text-center text-gray-600 mt-4">
+        Already have an account? <a href="login.html" class="text-blue-600 hover:underline">Login</a>
+      </p>
     </div>
   </main>
 
   <script type="module" src="js/config.js"></script>
+  <script type="module" src="js/header.js"></script>
   <script type="module" src="js/signup.js"></script>
 </body>
 </html>
